@@ -20,7 +20,7 @@ interface Project {
   createdBy: User; // Assuming User is another type/interface defining the creator
 }
 
-const User: User = g
+const user: User = g
   .model("User", {
     name: g.string().length({ min: 2, max: 100 }),
     email: g.string().unique(),
@@ -29,7 +29,7 @@ const User: User = g
     githubUrl: g.url().optional(),
     linkedinUrl: g.url().optional(),
     projects: g
-      .relation(() => Project)
+      .relation(() => project)
       .list()
       .optional(),
   })
@@ -37,7 +37,7 @@ const User: User = g
     rules.public().read();
   });
 
-const Project: Project = g
+const project: Project = g
   .model("Project", {
     title: g.string().length({ min: 3 }),
     description: g.string(),
@@ -45,7 +45,7 @@ const Project: Project = g
     liveSiteUrl: g.url(),
     githubUrl: g.url(),
     category: g.string().search(),
-    createdBy: g.relation(() => User),
+    createdBy: g.relation(() => user),
   })
   .auth((rules) => {
     rules.public().read();

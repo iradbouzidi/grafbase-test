@@ -21,7 +21,7 @@ interface Project {
 }
 
 const user: User = g
-  .model("User", {
+  .model("user", {
     name: g.string().length({ min: 2, max: 100 }),
     email: g.string().unique(),
     avatarUrl: g.url(),
@@ -38,7 +38,7 @@ const user: User = g
   });
 
 const project: Project = g
-  .model("Project", {
+  .model("project", {
     title: g.string().length({ min: 3 }),
     description: g.string(),
     image: g.url(),

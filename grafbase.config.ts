@@ -20,7 +20,7 @@ interface Project {
   createdBy: User; // Assuming User is another type/interface defining the creator
 }
 
-const User = g
+const User: User = g
   .model("User", {
     name: g.string().length({ min: 2, max: 100 }),
     email: g.string().unique(),
@@ -37,7 +37,7 @@ const User = g
     rules.public().read();
   });
 
-const Project = g
+const Project: Project = g
   .model("Project", {
     title: g.string().length({ min: 3 }),
     description: g.string(),

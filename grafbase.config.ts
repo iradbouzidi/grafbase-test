@@ -9,7 +9,7 @@ const user = g
     githubUrl: g.url().optional(),
     linkedinUrl: g.url().optional(),
     projects: g
-      .relation(() => Project)
+      .relation(() => project)
       .list()
       .optional(),
   })
@@ -25,7 +25,7 @@ const project = g
     liveSiteUrl: g.url(),
     githubUrl: g.url(),
     category: g.string().search(),
-    createdBy: g.relation(() => User),
+    createdBy: g.relation(() => user),
   })
   .auth((rules) => {
     rules.public().read();

@@ -1,6 +1,26 @@
 import { g, config, auth } from "@grafbase/sdk";
 
-const user = g
+interface User {
+  name: string;
+  email: string;
+  avatarUrl: string;
+  description?: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
+  projects?: Project[];
+}
+
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+  liveSiteUrl: string;
+  githubUrl: string;
+  category: string;
+  createdBy: User; // Assuming User is another type/interface defining the creator
+}
+
+const User = g
   .model("User", {
     name: g.string().length({ min: 2, max: 100 }),
     email: g.string().unique(),
@@ -9,7 +29,7 @@ const user = g
     githubUrl: g.url().optional(),
     linkedinUrl: g.url().optional(),
     projects: g
-      .relation(() => project)
+      .relation(() => Project)
       .list()
       .optional(),
   })
@@ -17,7 +37,7 @@ const user = g
     rules.public().read();
   });
 
-const project = g
+const Project = g
   .model("Project", {
     title: g.string().length({ min: 3 }),
     description: g.string(),
@@ -25,7 +45,7 @@ const project = g
     liveSiteUrl: g.url(),
     githubUrl: g.url(),
     category: g.string().search(),
-    createdBy: g.relation(() => user),
+    createdBy: g.relation(() => User),
   })
   .auth((rules) => {
     rules.public().read();
